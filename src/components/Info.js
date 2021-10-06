@@ -1,4 +1,6 @@
 import React from "react";
+import Display from "./Display.js";
+import uniqid from "uniqid";
 
 class Info extends React.Component {
   constructor(props) {
@@ -7,6 +9,7 @@ class Info extends React.Component {
       name: "",
       email: "",
       telephone: "",
+      id: uniqid(),
       infoarray: [],
     };
     this.handlerOfChange = this.handlerOfChange.bind(this);
@@ -27,45 +30,48 @@ class Info extends React.Component {
       this.state.name,
       this.state.email,
       this.state.telephone,
+      this.state.id,
     ];
     this.setState({
       infoarray: this.state.infoarray.concat(compileinfo),
     });
-    console.log(compileinfo);
   };
 
   render() {
     return (
-      <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handlerOfChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={this.handlerOfChange}
-          />
-        </label>
-        <label>
-          Phone number:
-          <input
-            type="tel"
-            name="telephone"
-            value={this.state.telephone}
-            onChange={this.handlerOfChange}
-          />
-        </label>
-        <input type="submit" value="Save" />
-      </form>
+      <div>
+        <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
+          <label>
+            Name:
+            <input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.handlerOfChange}
+            />
+          </label>
+          <label>
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.handlerOfChange}
+            />
+          </label>
+          <label>
+            Phone number:
+            <input
+              type="tel"
+              name="telephone"
+              value={this.state.telephone}
+              onChange={this.handlerOfChange}
+            />
+          </label>
+          <input type="submit" value="Save" />
+        </form>
+        <Display collected={this.state.infoarray} />
+      </div>
     );
   }
 }
