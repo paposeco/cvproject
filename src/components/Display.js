@@ -7,11 +7,14 @@ const Display = function (props) {
       {props.collected.map((element, index) => {
         return (
           <p key={uniqid()}>
-            {arraytitles[index]}
-            {element}
+            {element.title}
+            {element.selected}
           </p>
         );
       })}
+      {props.collected.length !== 0 ? (
+        <button onClick={props.edit}>Edit Section</button>
+      ) : null}
     </div>
   );
 };

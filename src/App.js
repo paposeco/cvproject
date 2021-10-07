@@ -4,43 +4,50 @@ import Info from "./components/Info.js";
 //import Education from "./components/Education.js";
 //import Experience from "./components/Experience.js";
 //import uniqid from "uniqid"; id: uniqid()
+import Display from "./components/Display.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.getData = this.getData.bind(this);
     this.state = {
-      info: {
-        name: "",
-        email: "",
-        telephone: "",
-      },
-      // education: {},
-      // experience: {},
+      info: [],
+      renderInfo: true,
+      editInfo: false,
     };
-    this.handlerOfChange = this.handlerOfChange.bind(this);
-    this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
+    this.editThings = this.editThings.bind(this);
   }
 
-  handlerOfChange = function (event) {
+  getData = function (datareceived) {
+    const currentarray = this.state.info;
     this.setState({
-      info: {},
+      info: currentarray.concat(datareceived),
+      renderInfo: false,
     });
   };
 
-  handlerOfSubmit = function (event) {};
+  editThings = function (event) {
+    this.setState({
+      renderInfo: true,
+      editInfo: true,
+    });
+    //console.log(this.state.info);
+  };
 
   render() {
-    // const {
-    //   infocollected,
-    //   educationcollected,
-    //   experiencecollected,
-    // } = this.state;
-
     return (
       <div>
         <h1>CV</h1>
         <h2>Fill out every item on the forms.</h2>
-        <Info />
+        {/* show form only if data hasnt been retrieved yet */}
+        {this.state.renderInfo && !this.state.editInfo ? (
+          <Info sendInfo={this.getData} weGoAgain="no" />
+        ) : null}
+        {this.state.editInfo ? (
+          <Info weGoAgain="yes" information={this.state.info} />
+        ) : null}
+        <Display collected={this.state.info} edit={this.editThings} />
+        {/* <Display/> */}
 
         {/* <form id="education"> */}
         {/*   <label> */}

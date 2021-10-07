@@ -1,41 +1,82 @@
 import React from "react";
-import Display from "./Display.js";
+//import Display from "./Display.js";
 
 class Info extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: { title: "Name: ", selected: "" },
-      email: { title: "E-mail: ", selected: "" },
-      telephone: { title: "Telephone: ", selected: "" },
+      username: { title: "Name: ", selected: "", alias: "username" },
+      email: { title: "E-mail: ", selected: "", alias: "email" },
+      telephone: { title: "Telephone: ", selected: "", alias: "telephone" },
       infoarray: [],
+      edit: false,
     };
     this.handlerOfChange = this.handlerOfChange.bind(this);
     this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
+    this.editInfo = this.editInfo.bind(this);
   }
 
   handlerOfChange = function (event) {
     const target = event.target;
-    const name = target.name;
-    const selected = target.name.selected;
+    const nameoftarget = target.name;
     const value = target.value;
     this.setState({
-      [name]: { title: this.state.title, [id]: value },
-    });
-  };
-  handlerOfSubmit = function (event) {
-    event.preventDefault();
-    const compileinfo = [
-      this.state.name,
-      this.state.email,
-      this.state.telephone,
-    ];
-    this.setState({
-      infoarray: this.state.infoarray.concat(compileinfo),
+      [nameoftarget]: {
+        title: this.state[nameoftarget].title,
+        selected: value,
+        alias: this.state[nameoftarget].alias,
+      },
     });
   };
 
+  handlerOfSubmit = function (event) {
+    event.preventDefault();
+    const compileinfo = [
+      this.state.username,
+      this.state.email,
+      this.state.telephone,
+    ];
+    // para que so envie a informaçao depois do vector estar actualizado, chamo uma funçao depois do setstate, pq ele é async
+    this.setState(
+      {
+        infoarray: this.state.infoarray.concat(compileinfo),
+      },
+      () => {
+        // nao percebo muito bem isto. acho que quando chamo a Info tem um props associado que tem um metodo chamado seninfo
+        this.props.sendInfo(this.state.infoarray);
+      }
+    );
+  };
+
+  editInfo = function () {
+    const objarray = this.props.information;
+    if (objarray !== undefined) {
+      objarray.map((element) => {
+        return this.setState({
+          [element.alias]: {
+            title: this.state[element.alias].alias,
+            selected: element.selected,
+            alias: element.alias,
+          },
+        });
+      });
+
+      this.setState({
+        edit: true,
+        infoarray: this.state.infoarray.concat([
+          this.state.username,
+          this.state.email,
+          this.state.telephone,
+        ]),
+      });
+    }
+  };
+
   render() {
+    //como fazer este check fora do render? diz que nao pode ser
+    if (this.props.weGoAgain === "yes") {
+      this.editInfo();
+    }
     return (
       <div>
         <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
@@ -43,9 +84,8 @@ class Info extends React.Component {
             Name:
             <input
               type="text"
-              name="name"
-              id="username"
-              value={this.state.name}
+              name="username"
+              value={this.state.username.selected}
               onChange={this.handlerOfChange}
             />
           </label>
@@ -54,8 +94,7 @@ class Info extends React.Component {
             <input
               type="email"
               name="email"
-              id="email"
-              value={this.state.email}
+              value={this.state.email.selected}
               onChange={this.handlerOfChange}
             />
           </label>
@@ -64,16 +103,53 @@ class Info extends React.Component {
             <input
               type="tel"
               name="telephone"
-              id="telephone"
-              value={this.state.telephone}
+              value={this.state.telephone.selected}
               onChange={this.handlerOfChange}
             />
           </label>
           <input type="submit" value="Save" />
         </form>
-        <Display collected={this.state.infoarray} />
+        {/* <Display collected={this.state.infoarray} /> */}
       </div>
     );
+    // } else {
+
+    //   return (
+    //     <div>
+    //       <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
+    //         <label>
+    //           Name:
+    //           <input
+    //             type="text"
+    //             name="username"
+    //             value={this.props.information[0].selected}
+    //             onChange={this.handlerOfChange}
+    //           />
+    //         </label>
+    //         <label>
+    //           Email:
+    //           <input
+    //             type="email"
+    //             name="email"
+    //             value={this.props.information[1].selected}
+    //             onChange={this.handlerOfChange}
+    //           />
+    //         </label>
+    //         <label>
+    //           Phone number:
+    //           <input
+    //             type="tel"
+    //             name="telephone"
+    //             value={this.props.information[2].selected}
+    //             onChange={this.handlerOfChange}
+    //           />
+    //         </label>
+    //         <input type="submit" value="Save" />
+    //       </form>
+    //       {/* <Display collected={this.state.infoarray} /> */}
+    //     </div>
+    //   );
+    // }
   }
 }
 export default Info;
