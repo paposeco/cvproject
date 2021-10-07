@@ -1,11 +1,16 @@
 import React from "react";
+import uniqid from "uniqid";
 
 const Display = function (props) {
-  // const { arraytitles } = ["Name: ", "Email: ", "Telephone: "];
   return (
-    <div key={props.id}>
-      {props.collected.map((element) => {
-        return <p>{element}</p>;
+    <div>
+      {props.collected.map((element, index) => {
+        return (
+          <p key={uniqid()}>
+            {arraytitles[index]}
+            {element}
+          </p>
+        );
       })}
     </div>
   );

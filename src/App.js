@@ -1,8 +1,8 @@
-import "./styles/App.css";
+//import "./styles/App.css";
 import React from "react";
 import Info from "./components/Info.js";
-import Education from "./components/Education.js";
-import Experience from "./components/Experience.js";
+//import Education from "./components/Education.js";
+//import Experience from "./components/Experience.js";
 //import uniqid from "uniqid"; id: uniqid()
 
 class App extends React.Component {
