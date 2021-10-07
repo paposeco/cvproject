@@ -14,6 +14,7 @@ class App extends React.Component {
       info: [],
       renderInfo: true,
       editInfo: false,
+      oldinfo: [],
     };
     this.editThings = this.editThings.bind(this);
   }
@@ -28,11 +29,19 @@ class App extends React.Component {
 
   editThings = function (event) {
     this.setState({
-      renderInfo: true,
+      renderInfo: false,
+      oldinfo: this.state.oldinfo.concat(this.state.info),
       editInfo: true,
+      info: [],
     });
     //console.log(this.state.info);
   };
+
+  // componentDidMount() {
+  //   if (this.state.editInfo) {
+  //     this.setState({ info: [], });
+  //   }
+  // }
 
   render() {
     return (
@@ -44,8 +53,13 @@ class App extends React.Component {
           <Info sendInfo={this.getData} weGoAgain="no" />
         ) : null}
         {this.state.editInfo ? (
-          <Info weGoAgain="yes" information={this.state.info} />
+          <Info
+            weGoAgain="yes"
+            sendInfo={this.getData}
+            information={this.state.oldinfo}
+          />
         ) : null}
+
         <Display collected={this.state.info} edit={this.editThings} />
         {/* <Display/> */}
 

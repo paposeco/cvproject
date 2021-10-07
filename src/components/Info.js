@@ -40,6 +40,7 @@ class Info extends React.Component {
     this.setState(
       {
         infoarray: this.state.infoarray.concat(compileinfo),
+        edit: false,
       },
       () => {
         // nao percebo muito bem isto. acho que quando chamo a Info tem um props associado que tem um metodo chamado seninfo
@@ -54,29 +55,22 @@ class Info extends React.Component {
       objarray.map((element) => {
         return this.setState({
           [element.alias]: {
-            title: this.state[element.alias].alias,
+            title: this.state[element.alias].title,
             selected: element.selected,
             alias: element.alias,
           },
         });
       });
-
-      this.setState({
-        edit: true,
-        infoarray: this.state.infoarray.concat([
-          this.state.username,
-          this.state.email,
-          this.state.telephone,
-        ]),
-      });
     }
   };
 
-  render() {
-    //como fazer este check fora do render? diz que nao pode ser
+  componentDidMount() {
     if (this.props.weGoAgain === "yes") {
       this.editInfo();
     }
+  }
+
+  render() {
     return (
       <div>
         <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
