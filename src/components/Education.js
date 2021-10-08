@@ -9,8 +9,8 @@ class Education extends React.Component {
       studytitle: { title: "Study: ", selected: "", alias: "studytitle" },
       startdate: { title: "Start Date: ", selected: "", alias: "startdate" },
       enddate: { title: "End Date: ", selected: "", alias: "enddate" },
-      //id: { title: "Id: ", selected: uniqid(), alias: "id" },
       id: uniqid(),
+      //      id: { title: "Id: ", selected: uniqid(), alias: "id" },
       collectionofstudies: [],
       edit: false,
     };
@@ -68,8 +68,8 @@ class Education extends React.Component {
             selected: "",
             alias: this.state.enddate.alias,
           },
-          iq: uniqid(),
-          // iq: {
+          id: uniqid(),
+          // id: {
           //   title: this.state.id.title,
           //   selected: uniqid(),
           //   alias: this.state.id.alias,
@@ -78,6 +78,8 @@ class Education extends React.Component {
       }
     );
   };
+
+  //o edit nao esta bem. tenho de arranjar forma de fazer match ao edit button a seccao onde esta na education e trabalahar no add button
 
   editEducation = function () {
     const objarray = this.props.education;

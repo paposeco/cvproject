@@ -17,6 +17,7 @@ class App extends React.Component {
       editInfo: false,
       oldinfo: [],
       education: [],
+      shortenedEducation: [],
       renderEducation: true,
       editEducation: false,
       oldeducation: [],
@@ -34,9 +35,13 @@ class App extends React.Component {
 
   getDataEducation = function (datareceived) {
     const currentarray = this.state.education;
+    const receivedarray = Array.from(datareceived);
+    receivedarray.pop();
     this.setState({
       education: currentarray.concat(datareceived),
+      shortenedEducation: this.state.shortenedEducation.concat(receivedarray),
       renderEducation: false,
+      // educationID: this.state.educationID.concat(datareceived.id),
     });
   };
 
@@ -55,6 +60,7 @@ class App extends React.Component {
         oldeducation: this.state.oldeducation.concat(this.state.education),
         editEducation: true,
         education: [],
+        shortenedEducation: [],
       });
     } else {
     }
@@ -77,7 +83,6 @@ class App extends React.Component {
             weGoAgain="yes"
           />
         ) : null}
-
         {this.state.info.length !== 0 ? (
           <Display collected={this.state.info} edit={this.editThings} />
         ) : null}
@@ -93,10 +98,14 @@ class App extends React.Component {
           />
         ) : null}
         {this.state.education.length !== 0 ? (
-          <Display collected={this.state.education} edit={this.editThings} />
+          <Display
+            collected={this.state.shortenedEducation}
+            divID={this.state.education[this.state.education.length - 1]}
+            edit={this.editThings}
+          />
         ) : null}
+        {/* if there are schools, show add button */}
         <h3>Work Experience</h3>
-
         {/* <form id="experience"> */}
         {/*   <label> */}
         {/*     Company name: */}
