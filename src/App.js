@@ -1,7 +1,7 @@
 //import "./styles/App.css";
 import React from "react";
 import Info from "./components/Info.js";
-//import Education from "./components/Education.js";
+import Education from "./components/Education.js";
 //import Experience from "./components/Experience.js";
 //import uniqid from "uniqid"; id: uniqid()
 import Display from "./components/Display.js";
@@ -9,17 +9,22 @@ import Display from "./components/Display.js";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.getData = this.getData.bind(this);
+    this.getDataInfo = this.getDataInfo.bind(this);
+    this.getDataEducation = this.getDataEducation.bind(this);
     this.state = {
       info: [],
       renderInfo: true,
       editInfo: false,
       oldinfo: [],
+      education: [],
+      renderEducation: true,
+      editEducation: false,
+      oldeducation: [],
     };
     this.editThings = this.editThings.bind(this);
   }
 
-  getData = function (datareceived) {
+  getDataInfo = function (datareceived) {
     const currentarray = this.state.info;
     this.setState({
       info: currentarray.concat(datareceived),
@@ -27,61 +32,71 @@ class App extends React.Component {
     });
   };
 
-  editThings = function (event) {
+  getDataEducation = function (datareceived) {
+    const currentarray = this.state.education;
     this.setState({
-      renderInfo: false,
-      oldinfo: this.state.oldinfo.concat(this.state.info),
-      editInfo: true,
-      info: [],
+      education: currentarray.concat(datareceived),
+      renderEducation: false,
     });
-    //console.log(this.state.info);
   };
 
-  // componentDidMount() {
-  //   if (this.state.editInfo) {
-  //     this.setState({ info: [], });
-  //   }
-  // }
+  editThings = function (event) {
+    const buttonid = event.target.id;
+    if (buttonid === "info") {
+      this.setState({
+        renderInfo: true,
+        oldinfo: this.state.oldinfo.concat(this.state.info),
+        editInfo: true,
+        info: [],
+      });
+    } else if (buttonid === "education") {
+      this.setState({
+        renderEducation: true,
+        oldeducation: this.state.oldeducation.concat(this.state.education),
+        editEducation: true,
+        education: [],
+      });
+    } else {
+    }
+  };
 
   render() {
     return (
       <div>
         <h1>CV</h1>
         <h2>Fill out every item on the forms.</h2>
+        <h3>Personal Information</h3>
         {/* show form only if data hasnt been retrieved yet */}
         {this.state.renderInfo && !this.state.editInfo ? (
-          <Info sendInfo={this.getData} weGoAgain="no" />
+          <Info sendInfo={this.getDataInfo} weGoAgain="no" />
         ) : null}
-        {this.state.editInfo ? (
+        {this.state.renderInfo && this.state.editInfo ? (
           <Info
-            weGoAgain="yes"
-            sendInfo={this.getData}
+            sendInfo={this.getDataInfo}
             information={this.state.oldinfo}
+            weGoAgain="yes"
           />
         ) : null}
 
-        <Display collected={this.state.info} edit={this.editThings} />
-        {/* <Display/> */}
+        {this.state.info.length !== 0 ? (
+          <Display collected={this.state.info} edit={this.editThings} />
+        ) : null}
+        <h3>Education</h3>
+        {this.state.renderEducation && !this.state.editEducation ? (
+          <Education sendInfo={this.getDataEducation} weGoAgain="no" />
+        ) : null}
+        {this.state.renderEducation && this.state.editEducation ? (
+          <Education
+            sendInfo={this.getDataEducation}
+            education={this.state.oldeducation}
+            weGoAgain="yes"
+          />
+        ) : null}
+        {this.state.education.length !== 0 ? (
+          <Display collected={this.state.education} edit={this.editThings} />
+        ) : null}
+        <h3>Work Experience</h3>
 
-        {/* <form id="education"> */}
-        {/*   <label> */}
-        {/*     School name: */}
-        {/*     <input type="text" /> */}
-        {/*   </label> */}
-        {/*   <label> */}
-        {/*     Study: */}
-        {/*     <input type="text" /> */}
-        {/*   </label> */}
-        {/*   <label> */}
-        {/*     Dates: */}
-        {/*     <input type="date" /> to{" "} */}
-        {/*     <label> */}
-        {/*       <input type="date" /> */}
-        {/*     </label> */}
-        {/*   </label> */}
-        {/*   <input type="submit" value="Save" /> */}
-        {/* </form> */}
-        {/* <Education alleducation={educationcollected} /> */}
         {/* <form id="experience"> */}
         {/*   <label> */}
         {/*     Company name: */}

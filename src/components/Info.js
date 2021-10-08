@@ -1,5 +1,4 @@
 import React from "react";
-//import Display from "./Display.js";
 
 class Info extends React.Component {
   constructor(props) {
@@ -103,47 +102,8 @@ class Info extends React.Component {
           </label>
           <input type="submit" value="Save" />
         </form>
-        {/* <Display collected={this.state.infoarray} /> */}
       </div>
     );
-    // } else {
-
-    //   return (
-    //     <div>
-    //       <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
-    //         <label>
-    //           Name:
-    //           <input
-    //             type="text"
-    //             name="username"
-    //             value={this.props.information[0].selected}
-    //             onChange={this.handlerOfChange}
-    //           />
-    //         </label>
-    //         <label>
-    //           Email:
-    //           <input
-    //             type="email"
-    //             name="email"
-    //             value={this.props.information[1].selected}
-    //             onChange={this.handlerOfChange}
-    //           />
-    //         </label>
-    //         <label>
-    //           Phone number:
-    //           <input
-    //             type="tel"
-    //             name="telephone"
-    //             value={this.props.information[2].selected}
-    //             onChange={this.handlerOfChange}
-    //           />
-    //         </label>
-    //         <input type="submit" value="Save" />
-    //       </form>
-    //       {/* <Display collected={this.state.infoarray} /> */}
-    //     </div>
-    //   );
-    // }
   }
 }
 export default Info;
