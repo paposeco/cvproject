@@ -3,7 +3,14 @@ import React from "react";
 
 const Display = function (props) {
   function findSection() {
-    const array = props.collected[0];
+    let array;
+    if (Array.isArray(props.collected[0])) {
+      array = props.collected[0][0];
+      console.log(props.collected);
+    } else {
+      array = props.collected[0];
+    }
+    //    const array = props.collected[0];
     const firstalias = array.alias;
     switch (firstalias) {
       case "username":
@@ -22,8 +29,6 @@ const Display = function (props) {
   //   console.log(currentid);
   //   return currentid;
   // }
-
-  console.log(props.collected);
 
   if (findSection() === "info") {
     return (
@@ -44,30 +49,30 @@ const Display = function (props) {
       </div>
     );
   } else {
+    //nao sei como é que hei de enviar o id ou receber. sera que devo fazer o pop aqui? e guardar o id algures
     return (
-      <div id={props.divID}>
-        {props.collected.map((element, index) => {
+      <div>
+        {props.collected.map((parentelement, index) => {
+          console.log(props.divID[index]);
           return (
-            <p key={element.alias}>
-              {element.title}
-              {element.selected}
-            </p>
+            <div id={props.divID[index]} key={props.divID[index]}>
+              {parentelement.map((childelement) => {
+                return (
+                  <p key={childelement.alias + props.divID[index]}>
+                    {childelement.title}
+                    {childelement.selected}
+                  </p>
+                );
+              })}
+
+              <button onClick={props.edit} id={findSection()}>
+                Edit Section
+              </button>
+            </div>
           );
         })}
 
-        <button onClick={props.edit} id={findSection()}>
-          Edit Section
-        </button>
-        <button>Add More</button>
-
-        {/*   {props.collected.length !== 0 ? ( */}
-        {/*     <button onClick={props.edit} id={findSection()}> */}
-        {/*       Edit Section */}
-        {/*     </button> */}
-        {/*       <button> */}
-        {/*       Add More */}
-        {/* </button> */}
-        {/*   ) : null} */}
+        <button onClick={props.add}>Add More</button>
       </div>
     );
   }

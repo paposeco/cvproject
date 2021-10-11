@@ -41,7 +41,7 @@ class Education extends React.Component {
     ];
     this.setState(
       {
-        collectionofstudies: this.state.collectionofstudies.concat(study),
+        collectionofstudies: this.state.collectionofstudies.concat([study]),
         edit: false,
       },
       () => {
@@ -75,6 +75,7 @@ class Education extends React.Component {
           //   alias: this.state.id.alias,
           // },
         });
+        console.log(this.state.collectionofstudies);
       }
     );
   };

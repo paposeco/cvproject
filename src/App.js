@@ -21,8 +21,11 @@ class App extends React.Component {
       renderEducation: true,
       editEducation: false,
       oldeducation: [],
+      addEducation: false,
+      studyId: [],
     };
     this.editThings = this.editThings.bind(this);
+    this.addMore = this.addMore.bind(this);
   }
 
   getDataInfo = function (datareceived) {
@@ -35,13 +38,17 @@ class App extends React.Component {
 
   getDataEducation = function (datareceived) {
     const currentarray = this.state.education;
-    const receivedarray = Array.from(datareceived);
-    receivedarray.pop();
-    this.setState({
-      education: currentarray.concat(datareceived),
-      shortenedEducation: this.state.shortenedEducation.concat(receivedarray),
-      renderEducation: false,
-      // educationID: this.state.educationID.concat(datareceived.id),
+    const receivedarray = datareceived;
+    receivedarray.forEach((element) => {
+      const savedelement = element;
+      const currentid = element.pop();
+      this.setState({
+        education: currentarray.concat([savedelement]),
+        shortenedEducation: this.state.shortenedEducation.concat([element]),
+        studyId: this.state.studyId.concat(currentid),
+        renderEducation: false,
+        addEducation: false,
+      });
     });
   };
 
@@ -64,6 +71,12 @@ class App extends React.Component {
       });
     } else {
     }
+  };
+
+  addMore = function (event) {
+    this.setState({
+      addEducation: true,
+    });
   };
 
   render() {
@@ -97,11 +110,15 @@ class App extends React.Component {
             weGoAgain="yes"
           />
         ) : null}
+        {this.state.addEducation ? (
+          <Education sendInfo={this.getDataEducation} weGoAgain="yes" />
+        ) : null}
         {this.state.education.length !== 0 ? (
           <Display
             collected={this.state.shortenedEducation}
-            divID={this.state.education[this.state.education.length - 1]}
             edit={this.editThings}
+            add={this.addMore}
+            divID={this.state.studyId}
           />
         ) : null}
         {/* if there are schools, show add button */}
