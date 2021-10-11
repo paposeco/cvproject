@@ -46,7 +46,8 @@ class Education extends React.Component {
       },
       () => {
         // se calhar devia enviar so um study? nao sei se ele guarda ou nao
-        this.props.sendInfo(this.state.collectionofstudies);
+        this.props.sendInfo([study]);
+        //this.props.sendInfo(this.state.collectionofstudies);
         this.setState({
           schoolname: {
             title: this.state.schoolname.title,
@@ -75,20 +76,19 @@ class Education extends React.Component {
           //   alias: this.state.id.alias,
           // },
         });
-        console.log(this.state.collectionofstudies);
       }
     );
   };
 
-  //o edit nao esta bem. tenho de arranjar forma de fazer match ao edit button a seccao onde esta na education e trabalahar no add button
-
   editEducation = function () {
-    const objarray = this.props.education;
+    const objarray = this.props.sendEducation;
+    console.log("edit");
+    console.log(objarray);
     if (objarray !== undefined) {
       objarray.map((element) => {
         return this.setState({
           [element.alias]: {
-            title: this.state[element.alias].title,
+            title: element.title,
             selected: element.selected,
             alias: element.alias,
           },

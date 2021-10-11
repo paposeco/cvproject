@@ -4,9 +4,10 @@ import React from "react";
 const Display = function (props) {
   function findSection() {
     let array;
+    console.log("display");
+    console.log(props.collected);
     if (Array.isArray(props.collected[0])) {
       array = props.collected[0][0];
-      console.log(props.collected);
     } else {
       array = props.collected[0];
     }
@@ -49,11 +50,9 @@ const Display = function (props) {
       </div>
     );
   } else {
-    //nao sei como é que hei de enviar o id ou receber. sera que devo fazer o pop aqui? e guardar o id algures
     return (
       <div>
         {props.collected.map((parentelement, index) => {
-          console.log(props.divID[index]);
           return (
             <div id={props.divID[index]} key={props.divID[index]}>
               {parentelement.map((childelement) => {
@@ -65,7 +64,11 @@ const Display = function (props) {
                 );
               })}
 
-              <button onClick={props.edit} id={findSection()}>
+              <button
+                onClick={props.edit}
+                id={findSection()}
+                data-specific={props.divID[index]}
+              >
                 Edit Section
               </button>
             </div>

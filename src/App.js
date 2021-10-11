@@ -37,21 +37,32 @@ class App extends React.Component {
   };
 
   getDataEducation = function (datareceived) {
-    const currentarray = this.state.education;
+    // const currentarray = this.state.education;
     const receivedarray = datareceived;
     receivedarray.forEach((element) => {
-      const savedelement = element;
+      const savedelement = Array.from(element);
       const currentid = element.pop();
-      this.setState({
-        education: currentarray.concat([savedelement]),
-        shortenedEducation: this.state.shortenedEducation.concat([element]),
-        studyId: this.state.studyId.concat(currentid),
-        renderEducation: false,
-        addEducation: false,
-      });
+      this.setState(
+        {
+          education: this.state.education.concat([savedelement]),
+          shortenedEducation: this.state.shortenedEducation.concat([element]),
+          studyId: this.state.studyId.concat(currentid),
+          renderEducation: false,
+          editEducation: false,
+          addEducation: false,
+          //oldeducation: this.state.oldeducation,
+        },
+        () => {
+          console.log("curren education");
+          console.log(this.state.education);
+        }
+      );
     });
   };
 
+  //depois do primeiro edit corta o ultimo elemento ?
+
+  //na segunda vez que faço edit os arrays so têm 4 elementos
   editThings = function (event) {
     const buttonid = event.target.id;
     if (buttonid === "info") {
@@ -62,20 +73,36 @@ class App extends React.Component {
         info: [],
       });
     } else if (buttonid === "education") {
+      const buttonData = event.target.dataset.specific;
+      const totaleducation = this.state.education;
+      const targetedEducation = totaleducation
+        .filter((array) => array.includes(buttonData))
+        .flat();
+      const remainingEducation = totaleducation.filter(
+        (array) => !array.includes(buttonData)
+      );
+      const shortenedRemainingEducation = Array.from(remainingEducation);
+      shortenedRemainingEducation.forEach((array) =>
+        array.length === 5 ? array.pop() : array
+      );
       this.setState({
         renderEducation: true,
-        oldeducation: this.state.oldeducation.concat(this.state.education),
+        oldeducation: targetedEducation,
         editEducation: true,
-        education: [],
-        shortenedEducation: [],
+        education: remainingEducation,
+        shortenedEducation: shortenedRemainingEducation,
       });
     } else {
     }
   };
 
+  //continuo sem saber o que é que esta a acontecer. depois de editar um elemento, quando clicko em edit outra vez o elemento vem sem id. nao é no getdata que isso esta a acontecer, nem no editthings. se calhar tenho de fazer debug a partir do primeiro edit e nao do segundo
+
   addMore = function (event) {
     this.setState({
       addEducation: true,
+      editEducation: false,
+      renderEducation: true,
     });
   };
 
@@ -100,19 +127,39 @@ class App extends React.Component {
           <Display collected={this.state.info} edit={this.editThings} />
         ) : null}
         <h3>Education</h3>
-        {this.state.renderEducation && !this.state.editEducation ? (
-          <Education sendInfo={this.getDataEducation} weGoAgain="no" />
+
+        {this.state.renderEducation &&
+        !this.state.addEducation &&
+        !this.state.editEducation ? (
+          <Education sendInfo={this.getDataEducation} />
         ) : null}
-        {this.state.renderEducation && this.state.editEducation ? (
+
+        {this.state.renderEducation &&
+        !this.state.addEducation &&
+        this.state.editEducation ? (
           <Education
             sendInfo={this.getDataEducation}
-            education={this.state.oldeducation}
+            sendEducation={this.state.oldeducation}
             weGoAgain="yes"
           />
         ) : null}
-        {this.state.addEducation ? (
-          <Education sendInfo={this.getDataEducation} weGoAgain="yes" />
+
+        {this.state.renderEducation &&
+        this.state.addEducation &&
+        !this.state.editEducation ? (
+          <Education sendInfo={this.getDataEducation} />
         ) : null}
+
+        {this.state.renderEducation &&
+        this.state.addEducation &&
+        this.state.editEducation ? (
+          <Education
+            sendInfo={this.getDataEducation}
+            sendEducation={this.state.oldeducation}
+            weGoAgain="yes"
+          />
+        ) : null}
+
         {this.state.education.length !== 0 ? (
           <Display
             collected={this.state.shortenedEducation}
