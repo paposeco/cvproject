@@ -23,9 +23,11 @@ class App extends React.Component {
       oldeducation: [],
       addEducation: false,
       studyId: [],
+      wegoagain: "no",
     };
     this.editThings = this.editThings.bind(this);
     this.addMore = this.addMore.bind(this);
+    this.deepCopy = this.deepCopy.bind(this);
   }
 
   getDataInfo = function (datareceived) {
@@ -37,7 +39,6 @@ class App extends React.Component {
   };
 
   getDataEducation = function (datareceived) {
-    // const currentarray = this.state.education;
     const receivedarray = datareceived;
     receivedarray.forEach((element) => {
       const savedelement = Array.from(element);
@@ -50,14 +51,22 @@ class App extends React.Component {
           renderEducation: false,
           editEducation: false,
           addEducation: false,
-          //oldeducation: this.state.oldeducation,
+          oldeducation: this.state.oldeducation,
         },
-        () => {
-          console.log("curren education");
-          console.log(this.state.education);
-        }
+        () => {}
       );
     });
+  };
+  deepCopy = function (arr) {
+    let copy = [];
+    arr.forEach((elem) => {
+      if (Array.isArray(elem)) {
+        copy.push(this.deepCopy(elem));
+      } else {
+        copy.push(elem);
+      }
+    });
+    return copy;
   };
 
   //depois do primeiro edit corta o ultimo elemento ?
@@ -81,17 +90,28 @@ class App extends React.Component {
       const remainingEducation = totaleducation.filter(
         (array) => !array.includes(buttonData)
       );
-      const shortenedRemainingEducation = Array.from(remainingEducation);
+      const shortenedRemainingEducation = this.deepCopy(remainingEducation);
       shortenedRemainingEducation.forEach((array) =>
         array.length === 5 ? array.pop() : array
       );
-      this.setState({
-        renderEducation: true,
-        oldeducation: targetedEducation,
-        editEducation: true,
-        education: remainingEducation,
-        shortenedEducation: shortenedRemainingEducation,
-      });
+      this.setState(
+        {
+          renderEducation: true,
+          oldeducation: targetedEducation,
+          editEducation: true,
+          education: remainingEducation,
+          shortenedEducation: shortenedRemainingEducation,
+          wegoagain: "yes",
+        },
+        () => {
+          console.log("currebt education");
+          console.log(this.state.education);
+          console.log("targetedEducation");
+          console.log(targetedEducation);
+          console.log("old education");
+          console.log(this.state.oldeducation);
+        }
+      );
     } else {
     }
   };
@@ -123,42 +143,57 @@ class App extends React.Component {
             weGoAgain="yes"
           />
         ) : null}
-        {this.state.info.length !== 0 ? (
-          <Display collected={this.state.info} edit={this.editThings} />
-        ) : null}
+        {/* {this.state.info.length !== 0 ? ( */}
+        {/*   <Display collected={this.state.info} edit={this.editThings} /> */}
+        {/* ) : null} */}
         <h3>Education</h3>
 
-        {this.state.renderEducation &&
-        !this.state.addEducation &&
-        !this.state.editEducation ? (
-          <Education sendInfo={this.getDataEducation} />
-        ) : null}
+        {/* {this.state.renderEducation && */}
+        {/* !this.state.addEducation && */}
+        {/* !this.state.editEducation ? ( */}
+        {/*   <Education sendInfo={this.getDataEducation} /> */}
+        {/* ) : null} */}
 
-        {this.state.renderEducation &&
-        !this.state.addEducation &&
-        this.state.editEducation ? (
-          <Education
-            sendInfo={this.getDataEducation}
-            sendEducation={this.state.oldeducation}
-            weGoAgain="yes"
-          />
-        ) : null}
+        <Education
+          sendInfo={this.getDataEducation}
+          sendEducation={this.state.oldeducation}
+          weGoAgain={this.state.wegoagain}
+        />
 
-        {this.state.renderEducation &&
-        this.state.addEducation &&
-        !this.state.editEducation ? (
-          <Education sendInfo={this.getDataEducation} />
-        ) : null}
+        {/* {this.state.renderEducation && */}
+        {/* !this.state.addEducation && */}
+        {/* this.state.editEducation ? ( */}
+        {/*   <Education */}
+        {/*     sendInfo={this.getDataEducation} */}
+        {/*     sendEducation={this.state.oldeducation} */}
+        {/*     weGoAgain="yes" */}
+        {/*   /> */}
+        {/* ) : null} */}
 
-        {this.state.renderEducation &&
-        this.state.addEducation &&
-        this.state.editEducation ? (
-          <Education
-            sendInfo={this.getDataEducation}
-            sendEducation={this.state.oldeducation}
-            weGoAgain="yes"
-          />
-        ) : null}
+        {/* {this.state.renderEducation && */}
+        {/* this.state.addEducation && */}
+        {/* !this.state.editEducation ? ( */}
+        {/*   <Education sendInfo={this.getDataEducation} /> */}
+        {/* ) : null} */}
+
+        {/* {this.state.renderEducation && */}
+        {/* this.state.addEducation && */}
+        {/* this.state.editEducation ? ( */}
+        {/*   <Education */}
+        {/*     sendInfo={this.getDataEducation} */}
+        {/*     sendEducation={this.state.oldeducation} */}
+        {/*     weGoAgain="yes" */}
+        {/*   /> */}
+        {/* ) : null} */}
+
+        {/* {this.state.education.length !== 0 ? ( */}
+        {/*   <Display */}
+        {/*     collected={this.state.education} */}
+        {/*     edit={this.editThings} */}
+        {/*     add={this.addMore} */}
+        {/*     divID={this.state.studyId} */}
+        {/*   /> */}
+        {/* ) : null} */}
 
         {this.state.education.length !== 0 ? (
           <Display
@@ -168,6 +203,7 @@ class App extends React.Component {
             divID={this.state.studyId}
           />
         ) : null}
+
         {/* if there are schools, show add button */}
         <h3>Work Experience</h3>
         {/* <form id="experience"> */}

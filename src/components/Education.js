@@ -70,11 +70,6 @@ class Education extends React.Component {
             alias: this.state.enddate.alias,
           },
           id: uniqid(),
-          // id: {
-          //   title: this.state.id.title,
-          //   selected: uniqid(),
-          //   alias: this.state.id.alias,
-          // },
         });
       }
     );
@@ -98,6 +93,7 @@ class Education extends React.Component {
   };
 
   componentDidMount() {
+    console.log(this.props.weGoAgain);
     if (this.props.weGoAgain === "yes") {
       this.editEducation();
     }

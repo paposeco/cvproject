@@ -23,14 +23,6 @@ const Display = function (props) {
     }
   }
 
-  // function extractID() {
-  //   const array = props.collected;
-  //   const length = array.length;
-  //   const currentid = array[length - 1];
-  //   console.log(currentid);
-  //   return currentid;
-  // }
-
   if (findSection() === "info") {
     return (
       <div>
