@@ -3,69 +3,69 @@ import React from "react";
 class Info extends React.Component {
   constructor(props) {
     super(props);
+    this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
+    this.handlerOfChange = this.handlerOfChange.bind(this);
+    this.fillOutForm = this.fillOutForm.bind(this);
     this.state = {
       username: { title: "Name: ", selected: "", alias: "username" },
       email: { title: "E-mail: ", selected: "", alias: "email" },
       telephone: { title: "Telephone: ", selected: "", alias: "telephone" },
-      infoarray: [],
-      edit: false,
+      completeinfo: [],
     };
-    this.handlerOfChange = this.handlerOfChange.bind(this);
-    this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
-    this.editInfo = this.editInfo.bind(this);
   }
-
-  handlerOfChange = function (event) {
-    const target = event.target;
-    const nameoftarget = target.name;
-    const value = target.value;
-    this.setState({
-      [nameoftarget]: {
-        title: this.state[nameoftarget].title,
-        selected: value,
-        alias: this.state[nameoftarget].alias,
-      },
-    });
-  };
 
   handlerOfSubmit = function (event) {
     event.preventDefault();
-    const compileinfo = [
-      this.state.username,
-      this.state.email,
-      this.state.telephone,
-    ];
-    // para que so envie a informaçao depois do vector estar actualizado, chamo uma funçao depois do setstate, pq ele é async
     this.setState(
       {
-        infoarray: this.state.infoarray.concat(compileinfo),
-        edit: false,
+        completeinfo: this.state.completeinfo.concat([
+          this.state.username,
+          this.state.email,
+          this.state.telephone,
+        ]),
       },
       () => {
-        // nao percebo muito bem isto. acho que quando chamo a Info tem um props associado que tem um metodo chamado seninfo
-        this.props.sendInfo(this.state.infoarray);
+        this.props.getText(this.state.completeinfo);
       }
     );
   };
 
-  editInfo = function () {
-    const objarray = this.props.information;
-    if (objarray !== undefined) {
-      objarray.map((element) => {
-        return this.setState({
-          [element.alias]: {
-            title: this.state[element.alias].title,
-            selected: element.selected,
-            alias: element.alias,
-          },
-        });
-      });
-    }
+  handlerOfChange = function (event) {
+    const statename = event.target.name;
+    this.setState({
+      [statename]: {
+        title: this.state[statename].title,
+        selected: event.target.value,
+        alias: this.state[statename].alias,
+      },
+    });
+  };
+
+  fillOutForm = function () {
+    const arrayreceived = this.props.toedit;
+    this.setState({
+      username: {
+        title: this.state.username.title,
+        selected: arrayreceived[0].selected,
+        alias: this.state.username.alias,
+      },
+      email: {
+        title: this.state.email.title,
+        selected: arrayreceived[1].selected,
+        alias: this.state.email.alias,
+      },
+      telephone: {
+        title: this.state.telephone.title,
+        selected: arrayreceived[2].selected,
+        alias: this.state.telephone.alias,
+      },
+    });
   };
 
   componentDidMount() {
-    if (this.props.weGoAgain === "yes") {
-      this.editInfo();
+    const emptyObject = Object.keys(this.props.toedit).length;
+    if (emptyObject !== 0) {
+      this.fillOutForm();
     }
   }
 
@@ -106,4 +106,5 @@ class Info extends React.Component {
     );
   }
 }
+
 export default Info;

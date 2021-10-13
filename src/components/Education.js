@@ -1,23 +1,35 @@
 import React from "react";
-import uniqid from "uniqid";
 
 class Education extends React.Component {
   constructor(props) {
     super(props);
+    this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
+    this.handlerOfChange = this.handlerOfChange.bind(this);
+    this.fillOutForm = this.fillOutForm.bind(this);
     this.state = {
       schoolname: { title: "School Name: ", selected: "", alias: "schoolname" },
       studytitle: { title: "Study: ", selected: "", alias: "studytitle" },
       startdate: { title: "Start Date: ", selected: "", alias: "startdate" },
       enddate: { title: "End Date: ", selected: "", alias: "enddate" },
-      id: uniqid(),
-      //      id: { title: "Id: ", selected: uniqid(), alias: "id" },
-      collectionofstudies: [],
-      edit: false,
+      completestudy: [],
     };
-    this.handlerOfSubmit = this.handlerOfSubmit.bind(this);
-    this.handlerOfChange = this.handlerOfChange.bind(this);
-    this.editEducation = this.editEducation.bind(this);
   }
+  handlerOfSubmit = function (event) {
+    event.preventDefault();
+    this.setState(
+      {
+        completestudy: this.state.completestudy.concat([
+          this.state.schoolname,
+          this.state.studytitle,
+          this.state.startdate,
+          this.state.enddate,
+        ]),
+      },
+      () => {
+        this.props.getText(this.state.completestudy);
+      }
+    );
+  };
 
   handlerOfChange = function (event) {
     const statename = event.target.name;
@@ -30,81 +42,46 @@ class Education extends React.Component {
     });
   };
 
-  handlerOfSubmit = function (event) {
-    event.preventDefault();
-    const study = [
-      this.state.schoolname,
-      this.state.studytitle,
-      this.state.startdate,
-      this.state.enddate,
-      this.state.id,
-    ];
-    this.setState(
-      {
-        collectionofstudies: this.state.collectionofstudies.concat([study]),
-        edit: false,
+  // on edit
+  fillOutForm = function () {
+    const arrayreceived = this.props.toedit;
+    this.setState({
+      schoolname: {
+        title: this.state.schoolname.title,
+        selected: arrayreceived[0].selected,
+        alias: this.state.schoolname.alias,
       },
-      () => {
-        // se calhar devia enviar so um study? nao sei se ele guarda ou nao
-        this.props.sendInfo([study]);
-        //this.props.sendInfo(this.state.collectionofstudies);
-        this.setState({
-          schoolname: {
-            title: this.state.schoolname.title,
-            selected: "",
-            alias: this.state.schoolname.alias,
-          },
-          studytitle: {
-            title: this.state.studytitle.title,
-            selected: "",
-            alias: this.state.studytitle.alias,
-          },
-          startdate: {
-            title: this.state.startdate.title,
-            selected: "",
-            alias: this.state.startdate.alias,
-          },
-          enddate: {
-            title: this.state.enddate.title,
-            selected: "",
-            alias: this.state.enddate.alias,
-          },
-          id: uniqid(),
-        });
-      }
-    );
-  };
-
-  editEducation = function () {
-    const objarray = this.props.sendEducation;
-    console.log("edit");
-    console.log(objarray);
-    if (objarray !== undefined) {
-      objarray.map((element) => {
-        return this.setState({
-          [element.alias]: {
-            title: element.title,
-            selected: element.selected,
-            alias: element.alias,
-          },
-        });
-      });
-    }
+      studytitle: {
+        title: this.state.studytitle.title,
+        selected: arrayreceived[1].selected,
+        alias: this.state.studytitle.alias,
+      },
+      startdate: {
+        title: this.state.startdate.title,
+        selected: arrayreceived[2].selected,
+        alias: this.state.startdate.alias,
+      },
+      enddate: {
+        title: this.state.enddate.title,
+        selected: arrayreceived[3].selected,
+        alias: this.state.enddate.alias,
+      },
+    });
   };
 
   componentDidMount() {
-    console.log(this.props.weGoAgain);
-    if (this.props.weGoAgain === "yes") {
-      this.editEducation();
+    const emptyObject = Object.keys(this.props.toedit).length;
+    if (emptyObject !== 0) {
+      this.fillOutForm();
     }
   }
 
   render() {
     return (
       <div>
-        <form id="education" name="education" onSubmit={this.handlerOfSubmit}>
+        <form onSubmit={this.handlerOfSubmit}>
           <label>
-            School name:
+            {this.state.schoolname.title}
             <input
               type="text"
               name="schoolname"
@@ -113,7 +90,7 @@ class Education extends React.Component {
             />
           </label>
           <label>
-            Study:
+            {this.state.studytitle.title}
             <input
               type="text"
               name="studytitle"

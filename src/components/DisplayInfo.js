@@ -1,6 +1,6 @@
 import React from "react";
 
-const Display = function (props) {
+const DisplayInfo = function (props) {
   const extractID = function (array) {
     const findIndex = array.findIndex((element) => element.id);
     return array[findIndex].id;
@@ -22,7 +22,7 @@ const Display = function (props) {
             <button
               onClick={props.editingButton}
               id={extractID(element)}
-              className="editeducation"
+              className="editinfo"
             >
               Edit
             </button>
@@ -33,4 +33,4 @@ const Display = function (props) {
   );
 };
 
-export default Display;
+export default DisplayInfo;
