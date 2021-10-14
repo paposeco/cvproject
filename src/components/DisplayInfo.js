@@ -9,11 +9,12 @@ const DisplayInfo = function (props) {
   return (
     <div>
       {props.textToDisplay.map((element) => {
+        const currentid = extractID(element);
         return (
-          <div key={extractID(element)}>
+          <div key={currentid}>
             {element.map((anotherelement) => {
               return (
-                <p key={anotherelement.alias + extractID(element)}>
+                <p key={anotherelement.alias + currentid}>
                   {anotherelement.title}
                   {anotherelement.selected}
                 </p>
@@ -21,10 +22,16 @@ const DisplayInfo = function (props) {
             })}
             <button
               onClick={props.editingButton}
-              id={extractID(element)}
+              id={currentid + "Edit"}
               className="editinfo"
+              data-buttonname="editinfo"
+              title="Edit"
             >
-              Edit
+              <i
+                className="las la-edit"
+                onClick={props.editingButton}
+                data-buttonname="editinfo"
+              ></i>
             </button>
           </div>
         );

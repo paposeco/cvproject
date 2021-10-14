@@ -1,6 +1,6 @@
 import React from "react";
 
-const DisplayExp = function (props) {
+const DisplayEdu = function (props) {
   const extractID = function (array) {
     const findIndex = array.findIndex((element) => element.id);
     return array[findIndex].id;
@@ -11,7 +11,7 @@ const DisplayExp = function (props) {
       {props.textToDisplay.map((element) => {
         const currentid = extractID(element);
         return (
-          <div key={currentid} className="subblock">
+          <div className="subblock" key={currentid}>
             {element.map((anotherelement) => {
               if (anotherelement.selected !== "") {
                 return (
@@ -32,27 +32,27 @@ const DisplayExp = function (props) {
             <button
               onClick={props.editingButton}
               id={currentid + "Edit"}
-              className="editexperience"
+              className="editeducation"
               title="Edit"
-              data-buttonname="editexperience"
+              data-buttonname="editeducation"
             >
               <i
                 className="las la-edit"
                 onClick={props.editingButton}
-                data-buttonname="editexperience"
+                data-buttonname="editeducation"
               ></i>
             </button>
             <button
               onClick={props.deleteButton}
               id={currentid + "Delete"}
-              className="deleteexperience"
+              className="deleteeducation"
               title="Delete"
-              data-buttonname="deletexperience"
+              data-buttonname="deleteeducation"
             >
               <i
                 className="las la-trash-alt"
                 onClick={props.editingButton}
-                data-buttonname="deleteexperience"
+                data-buttonname="deleteeducation"
               ></i>
             </button>
           </div>
@@ -62,4 +62,4 @@ const DisplayExp = function (props) {
   );
 };
 
-export default DisplayExp;
+export default DisplayEdu;

@@ -88,44 +88,51 @@ class Experience extends React.Component {
     return (
       <div>
         <form onSubmit={this.handlerOfSubmit}>
-          <label>
-            {this.state.companyname.title}
-            <input
-              type="text"
-              name="companyname"
-              value={this.state.companyname.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <label>
-            {this.state.positiontitle.title}
-            <input
-              type="text"
-              name="positiontitle"
-              value={this.state.positiontitle.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <label>
-            Dates:
-            <input
-              type="date"
-              name="startdate"
-              value={this.state.startdate.selected}
-              onChange={this.handlerOfChange}
-            />{" "}
-            to{" "}
-            <label>
-              <input
-                type="date"
-                name="enddate"
-                value={this.state.enddate.selected}
-                onChange={this.handlerOfChange}
-              />
-            </label>
-          </label>
-          <input type="submit" value="Save" />
+          <label>{this.state.companyname.title}</label>
+          <input
+            type="text"
+            name="companyname"
+            value={this.state.companyname.selected}
+            onChange={this.handlerOfChange}
+          />
+          <label>{this.state.positiontitle.title}</label>
+          <input
+            type="text"
+            name="positiontitle"
+            value={this.state.positiontitle.selected}
+            onChange={this.handlerOfChange}
+          />
+          <label>{this.state.startdate.title}</label>
+          <input
+            type="date"
+            name="startdate"
+            value={this.state.startdate.selected}
+            onChange={this.handlerOfChange}
+          />
+          <label>{this.state.enddate.title}</label>
+          <input
+            type="date"
+            name="enddate"
+            value={this.state.enddate.selected}
+            onChange={this.handlerOfChange}
+          />
+          <input type="submit" value="&#xf0c7;" title="Save" />
         </form>
+        <div>
+          <button
+            onClick={this.props.cancelButton}
+            className="cancelexperience"
+            className={this.props.showOrHide}
+            data-buttonname="cancelexperience"
+            title="Cancel"
+          >
+            <i
+              className="las la-times"
+              onClick={this.props.cancelButton}
+              data-buttonname="cancelexperience"
+            ></i>
+          </button>
+        </div>
       </div>
     );
   }

@@ -8,7 +8,7 @@ class Education extends React.Component {
     this.fillOutForm = this.fillOutForm.bind(this);
     this.state = {
       schoolname: { title: "School Name: ", selected: "", alias: "schoolname" },
-      studytitle: { title: "Study: ", selected: "", alias: "studytitle" },
+      studytitle: { title: "Study Title: ", selected: "", alias: "studytitle" },
       startdate: { title: "Start Date: ", selected: "", alias: "startdate" },
       enddate: { title: "End Date: ", selected: "", alias: "enddate" },
       completestudy: [],
@@ -80,44 +80,56 @@ class Education extends React.Component {
     return (
       <div>
         <form onSubmit={this.handlerOfSubmit}>
-          <label>
-            {this.state.schoolname.title}
-            <input
-              type="text"
-              name="schoolname"
-              value={this.state.schoolname.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <label>
-            {this.state.studytitle.title}
-            <input
-              type="text"
-              name="studytitle"
-              value={this.state.studytitle.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <label>
-            Dates:
-            <input
-              type="date"
-              name="startdate"
-              value={this.state.startdate.selected}
-              onChange={this.handlerOfChange}
-            />{" "}
-            to{" "}
-            <label>
-              <input
-                type="date"
-                name="enddate"
-                value={this.state.enddate.selected}
-                onChange={this.handlerOfChange}
-              />
-            </label>
-          </label>
-          <input type="submit" value="Save" />
+          <label className="requiredinput">{this.state.schoolname.title}</label>
+          <input
+            type="text"
+            name="schoolname"
+            value={this.state.schoolname.selected}
+            onChange={this.handlerOfChange}
+            required
+          />
+
+          <label className="requiredinput">{this.state.studytitle.title}</label>
+          <input
+            type="text"
+            name="studytitle"
+            value={this.state.studytitle.selected}
+            onChange={this.handlerOfChange}
+            required
+          />
+
+          <label className="requiredinput">{this.state.startdate.title}</label>
+          <input
+            type="date"
+            name="startdate"
+            value={this.state.startdate.selected}
+            onChange={this.handlerOfChange}
+            required
+          />
+          <label>{this.state.enddate.title}</label>
+          <input
+            type="date"
+            name="enddate"
+            value={this.state.enddate.selected}
+            onChange={this.handlerOfChange}
+          />
+
+          <input type="submit" value="&#xf0c7;" title="Save" />
         </form>
+        <div>
+          <button
+            onClick={this.props.cancelButton}
+            className={this.props.showOrHide}
+            data-buttonname="canceleducation"
+            title="Cancel"
+          >
+            <i
+              className="las la-times"
+              onClick={this.props.cancelButton}
+              data-buttonname="canceleducation"
+            ></i>
+          </button>
+        </div>
       </div>
     );
   }

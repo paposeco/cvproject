@@ -1,8 +1,128 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 60vw;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f2f3f3;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+h2 {
+  margin-top: 0px;
+}
+
 form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  --inputwidth: 379px;
 }
 
-form > input[type="submit"] {
+input[type="submit"] {
   width: max-content;
+  font-family: Line Awesome Free;
+}
+
+form#submitphotoform {
+  padding: 10px 0px;
+  display: block;
+}
+
+form#submitphotoform > input[type="submit"] {
+  margin-left: 5px;
+}
+
+form > label {
+  width: var(--inputwidth);
+}
+
+input[type="text"] {
+  max-width: var(--inputwidth);
+}
+input[type="email"] {
+  max-width: var(--inputwidth);
+}
+input[type="tel"] {
+  max-width: var(--inputwidth);
+}
+
+input[type="date"] {
+  height: 20px;
+  margin: 3px 0;
+  max-width: max-content;
+}
+
+#header {
+  background-color: #d9dcdc;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.rotate {
+  rotate: -90deg;
+  height: max-content;
+  margin-right: -40px;
+}
+
+#logodiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cvblock {
+  background-color: #ffffff;
+  padding: 20px 20px;
+  border-top: solid #ce4741 3px;
+}
+
+footer {
+  text-align: center;
+  background-color: #d9dcdc;
+  padding: 10px 20px;
+}
+
+/* input:required  */
+
+.requiredinput::after {
+  content: "*";
+}
+
+#profilephoto {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  margin-right: 20px;
+}
+
+#profilephoto > img {
+  max-width: 300px;
+}
+
+#profilephoto > button {
+  width: max-content;
+}
+
+#infosubdiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.subblock {
+  border-left: solid grey 2px;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+.hide {
+  display: none;
 }

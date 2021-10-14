@@ -73,34 +73,31 @@ class Info extends React.Component {
     return (
       <div>
         <form id="info" name="info" onSubmit={this.handlerOfSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="username"
-              value={this.state.username.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={this.state.email.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <label>
-            Phone number:
-            <input
-              type="tel"
-              name="telephone"
-              value={this.state.telephone.selected}
-              onChange={this.handlerOfChange}
-            />
-          </label>
-          <input type="submit" value="Save" />
+          <label className="requiredinput">{this.state.username.title}</label>
+          <input
+            type="text"
+            name="username"
+            value={this.state.username.selected}
+            onChange={this.handlerOfChange}
+            required
+          />
+          <label className="requiredinput">{this.state.email.title}</label>
+          <input
+            type="email"
+            name="email"
+            value={this.state.email.selected}
+            onChange={this.handlerOfChange}
+            required
+          />
+
+          <label>{this.state.telephone.title}</label>
+          <input
+            type="tel"
+            name="telephone"
+            value={this.state.telephone.selected}
+            onChange={this.handlerOfChange}
+          />
+          <input type="submit" value="&#xf0c7;" title="Save" />
         </form>
       </div>
     );
