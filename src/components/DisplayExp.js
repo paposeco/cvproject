@@ -1,5 +1,6 @@
 import React from "react";
 
+// same as displayedu; check there.
 const DisplayExp = function (props) {
   const extractID = function (array) {
     const findIndex = array.findIndex((element) => element.id);
@@ -13,21 +14,31 @@ const DisplayExp = function (props) {
         return (
           <div key={currentid} className="subblock">
             {element.map((anotherelement) => {
-              if (anotherelement.selected !== "") {
-                return (
-                  <p key={anotherelement.alias + currentid}>
-                    {anotherelement.title}
-                    {anotherelement.selected}
-                  </p>
-                );
+              let emptypara;
+              let colon;
+              if (
+                anotherelement.selected !== "" &&
+                anotherelement.id === undefined
+              ) {
+                emptypara = anotherelement.selected;
+                colon = ": ";
+              } else if (
+                anotherelement.selected === "" &&
+                anotherelement.id === undefined
+              ) {
+                emptypara = "None";
+                colon = ": ";
               } else {
-                return (
-                  <p key={anotherelement.alias + currentid}>
-                    {anotherelement.title}
-                    None
-                  </p>
-                );
+                emptypara = "";
+                colon = "";
               }
+              return (
+                <p key={anotherelement.alias + currentid}>
+                  <span className="blocksubtitle">{anotherelement.title}</span>
+                  {colon}
+                  {emptypara}
+                </p>
+              );
             })}
             <button
               onClick={props.editingButton}

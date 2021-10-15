@@ -1,5 +1,6 @@
 import React from "react";
 
+// same as education. check comments there
 class Experience extends React.Component {
   constructor(props) {
     super(props);
@@ -8,17 +9,17 @@ class Experience extends React.Component {
     this.fillOutForm = this.fillOutForm.bind(this);
     this.state = {
       companyname: {
-        title: "Company Name: ",
+        title: "Company Name",
         selected: "",
         alias: "companyname",
       },
       positiontitle: {
-        title: "Position Title: ",
+        title: "Position Title",
         selected: "",
         alias: "positiontitle",
       },
-      startdate: { title: "Start Date: ", selected: "", alias: "startdate" },
-      enddate: { title: "End Date: ", selected: "", alias: "enddate" },
+      startdate: { title: "Start Date", selected: "", alias: "startdate" },
+      enddate: { title: "End Date", selected: "", alias: "enddate" },
       experience: [],
     };
   }
@@ -121,7 +122,6 @@ class Experience extends React.Component {
         <div>
           <button
             onClick={this.props.cancelButton}
-            className="cancelexperience"
             className={this.props.showOrHide}
             data-buttonname="cancelexperience"
             title="Cancel"

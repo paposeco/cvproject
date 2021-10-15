@@ -7,13 +7,15 @@ class Education extends React.Component {
     this.handlerOfChange = this.handlerOfChange.bind(this);
     this.fillOutForm = this.fillOutForm.bind(this);
     this.state = {
-      schoolname: { title: "School Name: ", selected: "", alias: "schoolname" },
-      studytitle: { title: "Study Title: ", selected: "", alias: "studytitle" },
-      startdate: { title: "Start Date: ", selected: "", alias: "startdate" },
-      enddate: { title: "End Date: ", selected: "", alias: "enddate" },
+      schoolname: { title: "School Name", selected: "", alias: "schoolname" },
+      studytitle: { title: "Study Title", selected: "", alias: "studytitle" },
+      startdate: { title: "Start Date", selected: "", alias: "startdate" },
+      enddate: { title: "End Date", selected: "", alias: "enddate" },
       completestudy: [],
     };
   }
+
+  // complete study is a block of education sent to getit on App.js
   handlerOfSubmit = function (event) {
     event.preventDefault();
     this.setState(
@@ -42,7 +44,7 @@ class Education extends React.Component {
     });
   };
 
-  // on edit
+  // on edit fills out the form with the object sent by the editit function in app.js
   fillOutForm = function () {
     const arrayreceived = this.props.toedit;
     this.setState({
@@ -70,6 +72,7 @@ class Education extends React.Component {
   };
 
   componentDidMount() {
+    // every time education is rendered checks if the toedit was sent with a filled object; if it was runs the filloutoform function
     const emptyObject = Object.keys(this.props.toedit).length;
     if (emptyObject !== 0) {
       this.fillOutForm();

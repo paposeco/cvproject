@@ -14,6 +14,11 @@ h2 {
   margin-top: 0px;
 }
 
+p,
+label {
+  font-size: 20px;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -21,9 +26,21 @@ form {
   --inputwidth: 379px;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button {
   width: max-content;
   font-family: Line Awesome Free;
+  border: 1px solid lightgrey;
+  background-color: #ce4741;
+  color: white;
+  height: 35px;
+  width: 35px;
+  box-shadow: 1px 1px 1px lightgrey;
+}
+
+input[type="submit"]:hover,
+button:hover {
+  background-color: #90312d;
 }
 
 form#submitphotoform {
@@ -33,26 +50,32 @@ form#submitphotoform {
 
 form#submitphotoform > input[type="submit"] {
   margin-left: 5px;
+  width: 35px;
+  height: 35px;
 }
 
 form > label {
   width: var(--inputwidth);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"] {
   max-width: var(--inputwidth);
-}
-input[type="email"] {
-  max-width: var(--inputwidth);
-}
-input[type="tel"] {
-  max-width: var(--inputwidth);
+  border: 1px solid grey;
+  height: 30px;
 }
 
 input[type="date"] {
-  height: 20px;
   margin: 3px 0;
+  border: 1px solid grey;
+  height: 30px;
   max-width: max-content;
+}
+
+input:focus {
+  border: 1px solid #4c4c4c;
 }
 
 #header {
@@ -64,7 +87,7 @@ input[type="date"] {
 }
 
 .rotate {
-  rotate: -90deg;
+  transform: rotate(-90deg);
   height: max-content;
   margin-right: -40px;
 }
@@ -108,7 +131,8 @@ footer {
 }
 
 #profilephoto > button {
-  width: max-content;
+  width: 35px;
+  height: 35px;
 }
 
 #infosubdiv {
@@ -125,4 +149,69 @@ footer {
 
 .hide {
   display: none;
+}
+
+.blocksubtitle {
+  text-decoration: underline;
+}
+
+#submitbutton {
+  display: block;
+  max-width: max-content;
+  margin: 20px auto;
+  height: 40px;
+}
+
+a {
+  color: #ce4741;
+}
+
+a:hover {
+  color: #90312d;
+}
+
+a:visited {
+  color: #290e0d;
+}
+
+@media (max-width: 1400px) {
+  body {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 1600px) {
+  #infosubdiv {
+    flex-direction: column;
+  }
+  #profilephoto {
+    margin-top: 5px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 413px) {
+  #header {
+    flex-direction: column;
+  }
+
+  #rotate {
+    margin-right: 5px;
+  }
+
+  input[type="url"] {
+    width: 255px;
+  }
+
+  #profilephoto {
+    width: 100%;
+  }
+
+  form > label {
+    width: 100%;
+  }
+
+  #profilephoto > img {
+    max-width: 250px;
+  }
 }

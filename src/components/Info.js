@@ -1,5 +1,6 @@
 import React from "react";
 
+// same as education. check comments there
 class Info extends React.Component {
   constructor(props) {
     super(props);
@@ -7,9 +8,9 @@ class Info extends React.Component {
     this.handlerOfChange = this.handlerOfChange.bind(this);
     this.fillOutForm = this.fillOutForm.bind(this);
     this.state = {
-      username: { title: "Name: ", selected: "", alias: "username" },
-      email: { title: "E-mail: ", selected: "", alias: "email" },
-      telephone: { title: "Telephone: ", selected: "", alias: "telephone" },
+      username: { title: "Name", selected: "", alias: "username" },
+      email: { title: "E-mail", selected: "", alias: "email" },
+      telephone: { title: "Telephone", selected: "", alias: "telephone" },
       completeinfo: [],
     };
   }
