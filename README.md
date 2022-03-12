@@ -1,5 +1,7 @@
 # CV Upload page with react for The Odin Project
 
+[Live Demo](https://paposeco.github.io/cvproject/)
+
 Nothing happens when you click submit CV, but it was an excellent way to pratice react.
 
 I struggled for a good bit, but decided to restart from scratch. Best decision ever.
