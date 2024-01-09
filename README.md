@@ -2,7 +2,9 @@
 
 [Live Demo](https://paposeco.github.io/cvproject/)
 
-Nothing happens when you click submit CV, but it was an excellent way to pratice react.
+![cv](https://github.com/paposeco/cvproject/assets/13892562/94ad619f-a207-4ce4-a18f-5ced078a7131)
+
+Nothing happens when you click submit CV, but it was a good way to pratice react.
 
 I struggled for a good bit, but decided to restart from scratch. Best decision ever.
 
